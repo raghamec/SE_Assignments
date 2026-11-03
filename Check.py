@@ -1,0 +1,1 @@
+print("Hello! Welcome to the Student Grade Manager Program.")
