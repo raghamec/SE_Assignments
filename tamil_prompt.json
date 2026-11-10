@@ -1,52 +1,216 @@
+
 {
   "subject": {
-    "description": "A visually authentic representation of the Tamil Nadu Deepavali festival in the 1980s",
-    "primary_focus": "Children and adults celebrating Deepavali by bursting traditional firecrackers and lighting oil lamps",
+    "description": "A visually authentic representation of Tamil Nadu Diwali Festival, South India",
+    "primary_focus": "Traditional Tamil culture, people, architecture, and childrens",
     "people": {
       "presence": "Natural, candid human activity",
-      "clothing": "Scene-appropriate traditional Tamil clothing from the 1980s",
-      "expressions": "Natural facial expressions and realistic poses"
+      "clothing": "Scene-appropriate Tamil traditional",
+      "expressions": "Natural facial expressions and realistic poses",
+      "activities": [
+        "Everyday life",
+        "Local occupations",
+        "Cultural activities"
+      ]
     },
     "cultural_elements": [
       "Tamil language signage",
       "Traditional South Indian food",
       "Local markets",
       "Temple architecture",
-      "Regional arts and crafts",
-      "Traditional clay oil lamps",
-      "Period-appropriate festival decorations"
+      "Regional arts and crafts"
     ],
     "historical_period": "1980s",
     "customization": {
       "location": "A small town in Tamil Nadu, India",
-      "main_activity": "Families and children celebrating Deepavali on a traditional Tamil town street"
+      "main_activity": "People going about their daily routines",
+      "optional_objects": [
+        "Vintage bus",
+        "Bicycle",
+        "Tea stall",
+        "Traditional street vendors"
+      ]
     }
-   {
-  "subject": {
-    "description": "A visually authentic representation of the Tamil Nadu Deepavali festival in the 1980s",
-    "primary_focus": "Children and adults celebrating Deepavali by bursting traditional firecrackers and lighting oil lamps",
-    "people": {
-      "presence": "Natural, candid human activity",
-      "clothing": "Scene-appropriate traditional Tamil clothing from the 1980s",
-      "expressions": "Natural facial expressions and realistic poses"
+  },
+  "setting": {
+    "country": "India",
+    "state": "Tamil Nadu",
+    "specific_location": "A traditional Tamil town street",
+    "environment_type": "Urban, rural, coastal, or historical",
+    "architecture": {
+      "building_types": [
+        "Traditional tiled-roof houses",
+        "Local shops",
+        "Dravidian-style temples"
+      ],
+      "materials": [
+        "Brick",
+        "Wood",
+        "Clay tiles",
+        "Stone"
+      ],
+      "regional_authenticity": "Reflect local Tamil Nadu architecture appropriate to the chosen location and period"
     },
-    "cultural_elements": [
-      "Tamil language signage",
-      "Traditional South Indian food",
-      "Local markets",
-      "Temple architecture",
-      "Regional arts and crafts",
-      "Traditional clay oil lamps",
-      "Period-appropriate festival decorations"
+    "landscape": {
+      "vegetation": [
+        "Coconut palms",
+        "Banana plants",
+        "Tropical trees"
+      ],
+      "terrain": "Scene-appropriate South Indian landscape",
+      "weather_conditions": "Natural local weather"
+    },
+    "background_details": [
+      "Period-appropriate signboards",
+      "Local shops and homes",
+      "Authentic regional street details"
+    ]
+  },
+  "time_of_day": {
+    "period": "Early morning",
+    "specific_time": "7:30 AM",
+    "season": "User-defined",
+    "weather": "Clear with light atmospheric haze",
+    "atmosphere": "Peaceful, lively, and authentic",
+    "customization_options": [
+      "Sunrise",
+      "Morning",
+      "Noon",
+      "Golden hour",
+      "Sunset",
+      "Night"
+    ]
+  },
+  "lighting": {
+    "source": "Natural sunlight",
+    "direction": "Soft side lighting",
+    "quality": "Warm, diffused, and realistic",
+    "contrast": "Moderate natural contrast",
+    "shadows": "Soft shadows consistent with the time of day",
+    "atmospheric_effects": [
+      "Subtle morning haze",
+      "Natural light falloff",
+      "Realistic ambient illumination"
     ],
-    "historical_period": "1980s",
-    "customization": {
-      "location": "A small town in Tamil Nadu, India",
-      "main_activity": "Families and children celebrating Deepavali on a traditional Tamil town street"
+    "mood": "Warm, nostalgic, and inviting"
+  },
+  "camera": {
+    "camera_type": "35mm film camera",
+    "lens": "28mm wide-angle lens",
+    "shot_type": "Wide establishing shot",
+    "viewpoint": "Eye-level",
+    "composition": "Balanced composition with foreground, middle ground, and background",
+    "focus": "Natural subject focus with realistic depth of field",
+    "image_quality": "High detail with subtle analog film grain",
+    "photography_style": "Documentary street photography",
+    "customization_options": {
+      "lens_choices": [
+        "24mm wide angle",
+        "35mm documentary",
+        "50mm natural perspective",
+        "85mm portrait"
+      ],
+      "shot_choices": [
+        "Wide shot",
+        "Medium shot",
+        "Close-up",
+        "Aerial view",
+        "Street-level view"
+      ]
     }
-   "motion": {
-   "camera_move": "bottom to top",
-   "duration_seconds":5
+  },
+  "palette": {
+    "primary_colors": [
+      "Terracotta red",
+      "Earthy brown",
+      "Mustard yellow",
+      "Leaf green"
+    ],
+    "secondary_colors": [
+      "Cream",
+      "Off-white",
+      "Muted blue",
+      "Stone gray"
+    ],
+    "color_temperature": "Warm",
+    "saturation": "Moderate and natural",
+    "contrast": "Balanced",
+    "color_grading": "Subtle vintage film tones",
+    "customization_options": [
+      "1980s faded film colors",
+      "Natural contemporary colors",
+      "Monsoon greens",
+      "Coastal blues",
+      "Festival colors",
+      "Warm sunset tones"
+    ]
+  },
+  "style": {
+    "visual_style": "Photorealistic",
+    "genre": "Cultural documentary photography",
+    "historical_accuracy": "Authentic to the specified period",
+    "regional_authenticity": "Recognizably Tamil Nadu, avoiding generic South Asian visual stereotypes",
+    "texture": "Natural materials, realistic skin, fabric, and architectural surfaces",
+    "mood": "Nostalgic, culturally rich, and grounded",
+    "rendering": "Detailed, realistic, and physically plausible",
+    "customization_options": [
+      "Photorealism",
+      "Cinematic realism",
+      "Vintage film photography",
+      "Watercolor illustration",
+      "Digital painting",
+      "Architectural visualization"
+    ]
+  },
+  "aspect_ratio": {
+    "value": "16:9",
+    "orientation": "Landscape",
+    "intended_use": "Wide cinematic scenes and documentary visuals",
+    "customization_options": {
+      "landscape": "16:9",
+      "portrait": "4:5",
+      "vertical_video": "9:16",
+      "square": "1:1",
+      "cinematic_wide": "21:9"
+    }
+  },
+  "things_to_avoid": {
+    "historical_errors": ["any Vehicles like Bus, Lorry",
+      "Objects, vehicles, or technology inconsistent with the selected period",
+      "Anachronistic clothing or advertisements",
+      "Incorrect regional architecture"
+    ],
+    "cultural_errors": [
+      "Generic architecture unrelated to Tamil Nadu",
+      "Inaccurate traditional clothing",
+      "Misrepresented cultural practices",
+      "Random or malformed Tamil lettering"
+    ],
+    "visual_artifacts": [
+      "Distorted faces or bodies",
+      "Extra fingers or limbs",
+      "Unnatural poses",
+      "Duplicated people or objects",
+      "Unrealistic textures"
+    ],
+    "image_quality_issues": [
+      "Excessive HDR",
+      "Over-sharpening",
+      "Unnatural saturation",
+      "Excessive blur",
+      "Artificial plastic-like skin"
+    ],
+    "unwanted_elements": [
+      "Watermarks",
+      "Unrequested text overlays",
+      "Unrelated logos",
+      "Futuristic objects",
+      "Unrequested modern vehicles"
+    ],
+    "contextual_rule": "Avoid any element that conflicts with the specified location, historical period, subject, or visual style."
+    "motion": {
+    "camera_move": "bottom to top",
+    "duration_seconds":5
    }
   }
-  }
+}
