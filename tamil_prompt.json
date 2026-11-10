@@ -1,0 +1,52 @@
+{
+  "subject": {
+    "description": "A visually authentic representation of the Tamil Nadu Deepavali festival in the 1980s",
+    "primary_focus": "Children and adults celebrating Deepavali by bursting traditional firecrackers and lighting oil lamps",
+    "people": {
+      "presence": "Natural, candid human activity",
+      "clothing": "Scene-appropriate traditional Tamil clothing from the 1980s",
+      "expressions": "Natural facial expressions and realistic poses"
+    },
+    "cultural_elements": [
+      "Tamil language signage",
+      "Traditional South Indian food",
+      "Local markets",
+      "Temple architecture",
+      "Regional arts and crafts",
+      "Traditional clay oil lamps",
+      "Period-appropriate festival decorations"
+    ],
+    "historical_period": "1980s",
+    "customization": {
+      "location": "A small town in Tamil Nadu, India",
+      "main_activity": "Families and children celebrating Deepavali on a traditional Tamil town street"
+    }
+   {
+  "subject": {
+    "description": "A visually authentic representation of the Tamil Nadu Deepavali festival in the 1980s",
+    "primary_focus": "Children and adults celebrating Deepavali by bursting traditional firecrackers and lighting oil lamps",
+    "people": {
+      "presence": "Natural, candid human activity",
+      "clothing": "Scene-appropriate traditional Tamil clothing from the 1980s",
+      "expressions": "Natural facial expressions and realistic poses"
+    },
+    "cultural_elements": [
+      "Tamil language signage",
+      "Traditional South Indian food",
+      "Local markets",
+      "Temple architecture",
+      "Regional arts and crafts",
+      "Traditional clay oil lamps",
+      "Period-appropriate festival decorations"
+    ],
+    "historical_period": "1980s",
+    "customization": {
+      "location": "A small town in Tamil Nadu, India",
+      "main_activity": "Families and children celebrating Deepavali on a traditional Tamil town street"
+    }
+   "motion": {
+   "camera_move": "bottom to top",
+   "duration_seconds":5
+   }
+  }
+  }
