@@ -1,0 +1,15 @@
+Clean this student_enrollment_raw and return only a JSON object
+
+Row Data:    {{ JSON.stringify($json)}}
+
+Rules:
+- Student_ID: No Change
+- Name: Title case (E.g., Raghavendran Chandrasekaran)
+- Email: If invalid set INVALID_EMAIL
+- Phone: If less than 10 digits set MISSING
+- Course: only Python or Machine Learning or Data Science
+- Fee_Paid: yes/YES = true, no/NO = false
+- City: Title case, empty=UNKNOWN
+- Enrolled_Date: Convert to YYYY-MM-DD
+
+Return only raw JSON. No explanation. No markdown
