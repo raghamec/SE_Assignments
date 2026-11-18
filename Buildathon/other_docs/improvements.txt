@@ -1,0 +1,8 @@
+arch 
+bm25 on rag 
+langsmith to track
+guardrail and eval
+
+Zero Duplicate Storage: Instead of maintaining a separate serialized BM25 file on disk that could fall out of sync with faiss_index/, get_all_docs_from_faiss() reads existing chunks straight out of your saved FAISS docstore. Both uploaded PDFs and scraped schemes are automatically included.
+
+Reciprocal Rank Fusion (RRF): Merges results from both FAISS (0.5 weight) and BM25 (0.5 weight) cleanly without relying on deprecated langchain.retrievers module paths, ensuring exact scheme acronyms/numbers (caught by BM25) and conceptual queries (caught by FAISS) both rank at the top.

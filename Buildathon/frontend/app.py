@@ -95,7 +95,7 @@ st.markdown(f"""
         font-weight: 600 !important;
     }}
 
-    /* --- FILE UPLOADER DROPZONE & BUTTON STYLING --- */
+    /* --- FILE UPLOADER DROPZONE & BROWSE BUTTON STYLING --- */
     [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] {{
         background-color: #e8f5e9 !important;
         border: 2px dashed #2e7d32 !important;
@@ -120,18 +120,25 @@ st.markdown(f"""
         color: #2e7d32 !important;
     }}
 
+    /* Browse files button inside dropzone forced to Yellow (#ffeb3b) */
     [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button {{
-        background-color: #2e7d32 !important;
-        color: #ffffff !important;
-        border: none !important;
+        background-color: #1b5e20 !important;
+        border: 2px solid #81c784 !important;
         border-radius: 6px !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
         padding: 6px 14px !important;
+    }}
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button *,
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button span,
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button p {{
+        color: #ffeb3b !important;
     }}
 
     [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button:hover {{
-        background-color: #1b5e20 !important;
-        color: #ffeb3b !important;
+        background-color: #144a18 !important;
+    }}
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button:hover * {{
+        color: #ffffff !important;
     }}
 
     [data-testid="stSidebar"] [data-testid="stFileUploaderFile"] {{
@@ -140,6 +147,30 @@ st.markdown(f"""
         border-radius: 6px !important;
         color: #1b5e20 !important;
         padding: 4px 8px !important;
+    }}
+
+    /* --- SIDEBAR SUBMIT BUTTON STYLING (Forced Yellow #ffeb3b) --- */
+    [data-testid="stSidebar"] .stButton > button {{
+        background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%) !important;
+        border: 2px solid #81c784 !important;
+        border-radius: 8px !important;
+        width: 100% !important;
+        font-weight: 800 !important;
+        padding: 8px !important;
+        margin-top: 8px !important;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.2) !important;
+    }}
+    [data-testid="stSidebar"] .stButton > button *,
+    [data-testid="stSidebar"] .stButton > button span,
+    [data-testid="stSidebar"] .stButton > button p {{
+        color: #ffeb3b !important;
+    }}
+
+    [data-testid="stSidebar"] .stButton > button:hover {{
+        background: linear-gradient(135deg, #144a18 0%, #1b5e20 100%) !important;
+    }}
+    [data-testid="stSidebar"] .stButton > button:hover * {{
+        color: #ffffff !important;
     }}
     
     /* FIXED CENTERED HEADER SECTION */
@@ -240,7 +271,6 @@ st.markdown(f"""
     /* --- CLEAR BUTTON ("நீக்குக") STYLING --- */
     .main .stButton > button {{
         background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 100%) !important;
-        color: #ffffff !important;
         border: 2px solid #ffeb3b !important;
         border-radius: 20px !important;
         padding: 6px 18px !important;
@@ -250,9 +280,13 @@ st.markdown(f"""
         transition: all 0.2s ease-in-out !important;
         float: right !important;
     }}
+    .main .stButton > button *,
+    .main .stButton > button span,
+    .main .stButton > button p {{
+        color: #ffffff !important;
+    }}
     .main .stButton > button:hover {{
         background: linear-gradient(135deg, #8e0000 0%, #b71c1c 100%) !important;
-        color: #ffeb3b !important;
         transform: translateY(-2px) !important;
     }}
     
@@ -350,8 +384,10 @@ st.markdown(f"""
 # Initialize Session State
 if "messages" not in st.session_state:
     st.session_state.messages = []
-if "processed_files" not in st.session_state:
-    st.session_state.processed_files = set()
+if "uploader_key" not in st.session_state:
+    st.session_state.uploader_key = 0
+if "upload_success_msg" not in st.session_state:
+    st.session_state.upload_success_msg = None
 
 # Sidebar with Expandable/Collapsible Upload Section
 with st.sidebar:
@@ -360,14 +396,17 @@ with st.sidebar:
     with st.expander("📂 PDF ஆவணங்களைப் பதிவேற்றுக", expanded=True):
         st.write("விவசாய திட்டங்கள் குறித்த கையேடுகள் பகிரவும்.")
         
+        # Dynamic key resets uploader widget after processing
         uploaded_files = st.file_uploader(
-            "PDF கோப்புகளைத் தேர்ந்தெடுக்கவும்", type=["pdf"], accept_multiple_files=True
+            "PDF கோப்புகளைத் தேர்ந்தெடுக்கவும்", 
+            type=["pdf"], 
+            accept_multiple_files=True,
+            key=f"pdf_uploader_{st.session_state.uploader_key}"
         )
         
-        if uploaded_files:
-            current_file_names = {f.name for f in uploaded_files}
-            
-            if current_file_names != st.session_state.processed_files:
+        # Submit Button
+        if st.button("Submit", key="process_pdfs_btn"):
+            if uploaded_files:
                 with st.spinner("🌿 ஆவணங்கள் பகுப்பாய்வு செய்யப்பட்டு அட்டவணைப்படுத்தப்படுகின்றன..."):
                     files_payload = [
                         ("files", (file.name, file.getvalue(), "application/pdf"))
@@ -377,10 +416,18 @@ with st.sidebar:
                     
                     if response.status_code == 200:
                         data = response.json()
-                        st.success(f"🌱 {data['message']} ({data['chunks_indexed']} பகுதிகள் சேமிக்கப்பட்டன)")
-                        st.session_state.processed_files = current_file_names
+                        st.session_state.upload_success_msg = f"🌱 {data['message']} ({data['chunks_indexed']} பகுதிகள் சேமிக்கப்பட்டன)"
+                        st.session_state.uploader_key += 1
+                        st.rerun()
                     else:
+                        st.session_state.upload_success_msg = None
                         st.error(f"⚠️ பிழை: {response.text}")
+            else:
+                st.warning("⚠️ தயவுசெய்து முதலில் குறைந்தது ஒரு கோப்பையாவது தேர்ந்தெடுக்கவும்.")
+        
+        # Display persistent success message if available
+        if st.session_state.upload_success_msg:
+            st.success(st.session_state.upload_success_msg)
                         
     st.markdown("---")
     st.markdown("**💡 குறிப்பு:** ஆங்கிலம், தமிழ் அல்லது Tanglish மொழிகளில் கேள்விகளைக் கேட்கலாம். பதில்கள் **தமிழில்** மட்டுமே வழங்கப்படும்!")
@@ -392,7 +439,7 @@ AI_AVATAR = "🌾"
 # Scrollable Chat Container Wrapper Start
 st.markdown('<div class="chat-scroll-container">', unsafe_allow_html=True)
 
-# Display Chat History with Custom Avatars (Source section completely removed)
+# Display Chat History with Custom Avatars
 for msg in st.session_state.messages:
     avatar_icon = USER_AVATAR if msg["role"] == "user" else AI_AVATAR
     with st.chat_message(msg["role"], avatar=avatar_icon):
@@ -409,7 +456,7 @@ with clear_col:
         st.rerun()
 
 # Chat Input in Tamil
-if prompt := st.chat_input("அரசு திட்டங்கல் பற்றி இங்கே கேட்கவும்.. (குறிப்பு: ஆங்கிலம், தமிழ் அல்லது Tanglish மொழிகளில் கேள்விகளைக் கேட்கலாம்)"):
+if prompt := st.chat_input("அரசு வேளாண் திட்டங்கள் பற்றி இங்கே கேட்கவும்.. (குறிப்பு: ஆங்கிலம், தமிழ் அல்லது Tanglish மொழிகளில் கேள்விகளைக் கேட்கலாம்)"):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user", avatar=USER_AVATAR):
         st.markdown(prompt)
