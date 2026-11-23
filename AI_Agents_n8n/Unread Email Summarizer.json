@@ -1,0 +1,229 @@
+{
+  "name": "Unread Email Summarizer",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        -32
+      ],
+      "id": "fd201d1a-6139-4e0f-85f6-2abfb838cf3c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 5,
+        "filters": {
+          "readStatus": "unread"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -144,
+        -32
+      ],
+      "id": "bd03a9b5-d4e0-492a-a12e-29334253aa2a",
+      "name": "Get many messages",
+      "webhookId": "ef68a5c2-73a8-4164-b321-aaab098e6c69",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pyPCgWmAbJ4Zgqyu",
+          "name": "theaiceo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write ONE line (20 words maximum) describing this email.\nNo greeting, no heading, no extra text.\n\nFrom: {{ $json.From }} subject: {{ $json.Subject }} \nPreview: {{ $json.snippet }}",
+        "options": {
+          "systemMessage": "You're an AI Assistant to pick only latest 5 unread emails from connected mailbox and summarize it all 5 unread emails  into strictly one single summarized email with summary of one line from each 5 unread email with no greeting or wishes required and send it to raghamec@gmail.com \n\nSend only one summary email properly  ",
+          "maxIterations": 5
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        80,
+        -32
+      ],
+      "id": "137eeec3-9091-4eb6-99de-1347b8c38d5f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        16,
+        176
+      ],
+      "id": "60f4d5e3-01b4-4c4f-a25c-f15df215d393",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "yLqhovuK9Tp8Oj3c",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=Unread_{{ $json.id }}",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        176,
+        160
+      ],
+      "id": "bd072b01-2ca4-42c6-bd2e-e7fa73d4a3ce",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "output",
+              "renameField": true,
+              "outputFieldName": "=summaries"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -32
+      ],
+      "id": "6fa256a8-7fef-4a67-a117-e100b79d047b",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "sendTo": "raghamec@gmail.com",
+        "subject": "Summary of 5 Latest Unread Email",
+        "emailType": "text",
+        "message": "={{ $json.summaries.map(item => `• ${item}`).join('\\n') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        -32
+      ],
+      "id": "88ab494c-9eef-4514-aae1-7549aef79a27",
+      "name": "Send a message",
+      "webhookId": "0f6eaea3-e725-4039-b0b6-78d5ad61b9e3",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pyPCgWmAbJ4Zgqyu",
+          "name": "theaiceo"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5677c1f1-f3a8-4340-936b-214af204b486",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8cd884c74ba7450061f6210012ed345faa6367f6138605f7826146f4499fbd72"
+  },
+  "nodeGroups": [],
+  "id": "BikVd9dGrdnmqeEg",
+  "tags": []
+}
